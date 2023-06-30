@@ -55,7 +55,9 @@ export default function Navbar(props: Props) {
       const authors = await Client.fetch(
         `*[_type == "author"]{name, "img": image.asset->url }`
       );
-      const categories = await Client.fetch(`*[_type == "category"].title`);
+      const categories = await Client.fetch(
+        `*[_type == "category"]{'name': title}`
+      );
 
       console.log(authors);
 
@@ -134,10 +136,12 @@ export default function Navbar(props: Props) {
             <Dropdown
               label="Categories"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
+              data={state.categories}
             />
             <Dropdown
               label="Writers"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
+              data={state.authors}
             />
             <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>Login</Button>
           </Box>

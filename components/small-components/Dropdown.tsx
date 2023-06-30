@@ -54,9 +54,10 @@ const StyledMenu = styled((props: MenuProps) => (
 type DropdownProps = {
   label: string;
   sx: any;
+  data: any[];
 };
 
-export default function Dropdown({ label, sx }: DropdownProps) {
+export default function Dropdown({ label, sx, data }: DropdownProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -80,23 +81,16 @@ export default function Dropdown({ label, sx }: DropdownProps) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          <EditIcon />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
-        </MenuItem>
+        {data.length != 0 &&
+          data.map((item) => (
+            <>
+              <MenuItem onClick={handleClose} disableRipple>
+                <EditIcon />
+                {item.name}
+              </MenuItem>
+              <Divider sx={{ my: 0.5 }} />
+            </>
+          ))}
       </StyledMenu>
     </div>
   );
