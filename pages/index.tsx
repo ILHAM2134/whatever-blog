@@ -1,7 +1,9 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from "next/image";
+import styles from "../app/page.module.css";
 
-export default function Home() {
+import { createClient } from "next-sanity";
+
+export default function Home({ authors }: { authors: any[] }) {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -15,7 +17,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
+            By{" "}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -90,6 +92,27 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <div>
+        {authors.map((data) => (
+          <h1>{data.name}</h1>
+        ))}
+      </div>
     </main>
-  )
+  );
 }
+
+const client = createClient({
+  projectId: "7xx7fqme",
+  dataset: "production",
+  apiVersion: "2023-06-25",
+  useCdn: false,
+});
+
+export const getStaticProps = async () => {
+  const authors = await client.fetch(`*[_type == "author"]`);
+  return {
+    props: {
+      authors,
+    },
+  };
+};
