@@ -101,7 +101,7 @@ export default function Home({ authors }: { authors: any[] }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const authors = await Client.fetch(`*[_type == "author"]`);
   return {
     props: {
