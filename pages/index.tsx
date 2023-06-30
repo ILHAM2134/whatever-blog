@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "../app/page.module.css";
 
-import { createClient } from "next-sanity";
+import Client from "@/sanity-config";
 
 export default function Home({ authors }: { authors: any[] }) {
   return (
@@ -101,15 +101,8 @@ export default function Home({ authors }: { authors: any[] }) {
   );
 }
 
-const client = createClient({
-  projectId: "7xx7fqme",
-  dataset: "production",
-  apiVersion: "2023-06-25",
-  useCdn: false,
-});
-
 export const getStaticProps = async () => {
-  const authors = await client.fetch(`*[_type == "author"]`);
+  const authors = await Client.fetch(`*[_type == "author"]`);
   return {
     props: {
       authors,
