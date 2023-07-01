@@ -1,7 +1,10 @@
-import { Box, useMediaQuery, Typography, Button } from "@mui/material";
+import { Box, useMediaQuery, Typography, Button, Grid } from "@mui/material";
 import Image from "next/image";
 
 import bg from "@/public/img/1.jumbotron.jpg";
+import jumbotron1 from "@/public/img/2.jumbotron.jpg";
+import jumbotron2 from "@/public/img/3.jumbotron.jpg";
+
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/state/RootContext";
 
@@ -36,7 +39,7 @@ const Jumbotron = () => {
           top: 0,
           left: 0,
           backgroundColor: context.darkMode
-            ? "rgba(0, 0, 0, 0.9)"
+            ? "rgba(0, 0, 0, 0.7)"
             : "rgba(175, 175, 175, 0.5)",
           zIndex: 200,
         }}
@@ -44,33 +47,42 @@ const Jumbotron = () => {
         <Box
           sx={{
             position: "relative",
-            top: "35vh",
+            top: {
+              xs: "40vh",
+            },
             maxWidth: 1100,
             width: "100%",
-            my: {
-              md: 4,
-            },
             mx: "auto",
+            px: {
+              xs: 1,
+              sm: 2,
+            },
           }}
         >
           <motion.div
+            whileHover={{ rotate: 2, opacity: 0.9, scale: 0.9 }}
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.5 }}
           >
             <Typography
-              variant="h3"
+              variant="h2"
               sx={{
                 fontWeight: 900,
-                letterSpacing: "1px",
+                letterSpacing: "3px",
                 textAlign: { xs: "center", lg: "left" },
+                fontSize: {
+                  xs: "3rem",
+                  sm: "4rem",
+                  lg: "6rem",
+                },
               }}
               style={{
                 display: "block",
                 color: context.darkMode ? "white" : "black",
               }}
             >
-              Nice to meet you!
+              #ReadWhateverYouWant
             </Typography>
           </motion.div>
           <motion.div
@@ -91,29 +103,9 @@ const Jumbotron = () => {
                 color: context.darkMode ? "white" : "black",
               }}
             >
-              Want to know closer about me?
-            </Typography>{" "}
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: [0, 0.5, 1], scale: 1 }}
-            transition={{ duration: 3 }}
-          >
-            <Button
-              variant="contained"
-              sx={{
-                py: 1,
-                px: 4,
-                mt: { xs: 4, md: 3 },
-                mx: { xs: "auto", lg: 0 },
-                fontSize: "1.2rem",
-                display: "block",
-                width: "fit-content",
-              }}
-              href="#about"
-            >
-              Check this out!
-            </Button>
+              this blog contains whatever random various topics that fulfill
+              your daily dose of randomness
+            </Typography>
           </motion.div>
         </Box>
       </Box>

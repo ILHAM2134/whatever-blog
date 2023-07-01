@@ -33,13 +33,6 @@ interface Props {
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const navItems = [
-  { name: "Recent Post", id: "#about" },
-  { name: "Categories", id: "#projects" },
-  { name: "Writers", id: "#training" },
-  { name: "Login", id: "#experience" },
-];
-
 export default function Navbar(props: Props) {
   const router = useRouter();
   const [context, setContext] = useAppContext();
@@ -88,7 +81,9 @@ export default function Navbar(props: Props) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: context.darkMode ? "black" : "rgba(175, 175, 175, 0.5)",
+          background: context.darkMode
+            ? "rgba(0, 0, 0, 0.5)"
+            : "rgba(175, 175, 175, 0.5)",
         }}
       >
         <Toolbar
@@ -132,7 +127,7 @@ export default function Navbar(props: Props) {
             }}
           >
             <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>
-              Recent Post
+              Recent Posts
             </Button>
             <Dropdown
               label="Categories"
@@ -199,13 +194,48 @@ export default function Navbar(props: Props) {
             </Typography>
             <Divider />
             <List>
-              {navItems.map((item) => (
-                <ListItem disablePadding>
-                  <ListItemButton sx={{ textAlign: "center" }} href={item.id}>
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              <ListItem disablePadding>
+                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                  <ListItemText primary="Recent Posts" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                  <ListItemText primary="Categories" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                  <ListItemText primary="Writers" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                  <ListItemText primary="Login" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem
+                disablePadding
+                onClick={() => {
+                  setIsDarkMode(!isDarkMode);
+                  setContext((prev: { darkMode: boolean }) => ({
+                    ...prev,
+                    darkMode: !prev.darkMode,
+                  }));
+                }}
+              >
+                <ListItemButton
+                  sx={{ display: "flex", justifyContent: "left", ml: 1 }}
+                  href=""
+                >
+                  <IconButton
+                    sx={{ ml: { md: 5 } }}
+                    style={{ color: isDarkMode ? "white" : "black" }}
+                  >
+                    {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                  </IconButton>
+                </ListItemButton>
+              </ListItem>
             </List>
           </Box>
         </Drawer>

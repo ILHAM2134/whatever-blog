@@ -3,9 +3,6 @@ import { styled, alpha } from "@mui/material/styles";
 import { Button, Divider, Menu, MenuItem } from "@mui/material";
 import { MenuProps } from "@mui/material/Menu";
 import EditIcon from "@mui/icons-material/Edit";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const StyledMenu = styled((props: MenuProps) => (
@@ -85,10 +82,9 @@ export default function Dropdown({ label, sx, data }: DropdownProps) {
           data.map((item) => (
             <>
               <MenuItem onClick={handleClose} disableRipple>
-                <EditIcon />
                 {item.name}
               </MenuItem>
-              <Divider sx={{ my: 0.5 }} />
+              <Divider sx={{ my: 0 }} />
             </>
           ))}
       </StyledMenu>
