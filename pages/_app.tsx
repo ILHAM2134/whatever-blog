@@ -66,4 +66,8 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   );
 };
 
+export const getServerSideProps = () => {
+  
+}
+
 export default MyApp;
