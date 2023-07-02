@@ -33,46 +33,11 @@ const useStyles = makeStyles({
   },
 });
 
-const RecentPosts = () => {
+const RecentPosts = ({ post, categories }: { post: any, categories: any }) => {
   const router = useRouter();
   const classes = useStyles();
-  const [post, setPost] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   const [context, setContext] = useAppContext();
-
-  useEffect(() => {
-    const getData = async () => {
-      const postList = await Client.fetch(
-        `*[_type == 'post'] {
-        'id': _id,
-        'created_at': _createdAt,
-        'updated_at': _updatedAt,
-        'author': author->{
-            name ,
-            'id': _id,
-            bio,
-            'img': image.asset->.url,
-        },
-        body,
-        'categories': categories[]->.title,
-        'mainImage': mainImage.asset->.url,
-        'slug': slug.current,
-        title
-    }[0...10]`
-      );
-
-      setPost(postList);
-
-      const categoryList = await Client.fetch(`
-        *[_type == 'category']{'name': title, "id": _id}
-      `);
-
-      setCategories(categoryList);
-    };
-
-    getData();
-  }, []);
 
   return (
     <Box
@@ -95,8 +60,8 @@ const RecentPosts = () => {
                 Recent Posts
               </Typography>
             </Box>
-            {post.length > 0 &&
-              post.map((data) => <RecentBlogCard post={data} />)}
+            {post?.length > 0 &&
+              post?.map((data) => <RecentBlogCard post={data} />)}
           </Grid>
           <Grid item xs={12} sm sx={{ px: 0, mt: 2 }}>
             <Box className={classes.root}>
@@ -134,6 +99,38 @@ const RecentPosts = () => {
       </Container>
     </Box>
   );
+};
+
+export const getServerSideProps = async () => {
+  const post = await Client.fetch(
+    `*[_type == 'post'] {
+    'id': _id,
+    'created_at': _createdAt,
+    'updated_at': _updatedAt,
+    'author': author->{
+        name ,
+        'id': _id,
+        bio,
+        'img': image.asset->.url,
+    },
+    body,
+    'categories': categories[]->.title,
+    'mainImage': mainImage.asset->.url,
+    'slug': slug.current,
+    title
+}[0...10]`
+  );
+
+  const categories = await Client.fetch(`
+    *[_type == 'category']{'name': title, "id": _id}
+  `);
+
+  return {
+    props: {
+      post,
+      categories,
+    },
+  };
 };
 
 export default RecentPosts;
