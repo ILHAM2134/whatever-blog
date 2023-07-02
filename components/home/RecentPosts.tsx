@@ -10,10 +10,6 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import Client from "@/sanity-config";
 import RecentBlogCard from "../small-components/RecentBlogCard";
 import { useAppContext } from "@/state/RootContext";
 import { useRouter } from "next/router";
@@ -37,6 +33,7 @@ const RecentPosts = ({ post, categories }: { post: any, categories: any }) => {
   const router = useRouter();
   const classes = useStyles();
 
+  console.log(post)
   const [context, setContext] = useAppContext();
 
   return (
@@ -99,38 +96,6 @@ const RecentPosts = ({ post, categories }: { post: any, categories: any }) => {
       </Container>
     </Box>
   );
-};
-
-export const getServerSideProps = async () => {
-  const post = await Client.fetch(
-    `*[_type == 'post'] {
-    'id': _id,
-    'created_at': _createdAt,
-    'updated_at': _updatedAt,
-    'author': author->{
-        name ,
-        'id': _id,
-        bio,
-        'img': image.asset->.url,
-    },
-    body,
-    'categories': categories[]->.title,
-    'mainImage': mainImage.asset->.url,
-    'slug': slug.current,
-    title
-}[0...10]`
-  );
-
-  const categories = await Client.fetch(`
-    *[_type == 'category']{'name': title, "id": _id}
-  `);
-
-  return {
-    props: {
-      post,
-      categories,
-    },
-  };
 };
 
 export default RecentPosts;
