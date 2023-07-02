@@ -40,14 +40,14 @@ const RecentBlogCard = ({ post }: { post: any }) => {
             variant="h6"
             sx={{ fontWeight: 600, mt: 1, opacity: 0.8 }}
           >
-            {post.body.length > 0 && (
+            {post?.body?.length > 0 && (
               post?.body?
               .map((text) => {
                 const bodyChild = text.children?
                   .map((child) => {
                     return child.text;
                   })
-                  .join("");
+                  .join("")
 
                 return bodyChild;
               })
