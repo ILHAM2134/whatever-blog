@@ -110,9 +110,9 @@ const RecentPosts = () => {
               >
                 {categories?.map((data) => (
                   <Chip
-                    label={`${data.name}`}
+                    label={`${data?.name}`}
                     variant="outlined"
-                    onClick={() => router.push(`/category/${data.id}`)}
+                    onClick={() => router.push(`/category/${data?.id}`)}
                   />
                 ))}
               </Stack>
