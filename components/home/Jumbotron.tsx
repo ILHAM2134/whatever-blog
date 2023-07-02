@@ -49,6 +49,7 @@ const Jumbotron = () => {
             position: "relative",
             top: {
               xs: "40vh",
+              sm: '55vh'
             },
             maxWidth: 1100,
             width: "100%",
@@ -72,7 +73,7 @@ const Jumbotron = () => {
                 letterSpacing: "3px",
                 textAlign: { xs: "center", lg: "left" },
                 fontSize: {
-                  xs: "3rem",
+                  xs: "2rem",
                   sm: "4rem",
                   lg: "6rem",
                 },
