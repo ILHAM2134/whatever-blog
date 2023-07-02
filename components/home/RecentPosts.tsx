@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import Client from "@/sanity-config";
 import RecentBlogCard from "../small-components/RecentBlogCard";
 import { useAppContext } from "@/state/RootContext";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles({
   root: {
@@ -33,6 +34,7 @@ const useStyles = makeStyles({
 });
 
 const RecentPosts = () => {
+  const router = useRouter();
   const classes = useStyles();
   const [post, setPost] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -63,7 +65,7 @@ const RecentPosts = () => {
       setPost(postList);
 
       const categoryList = await Client.fetch(`
-        *[_type == 'category'].title
+        *[_type == 'category']{'name': title, "id": _id}
       `);
 
       setCategories(categoryList);
@@ -107,7 +109,11 @@ const RecentPosts = () => {
                 sx={{ mt: 1, flexWrap: "wrap", gap: 1 }}
               >
                 {categories?.map((data) => (
-                  <Chip label={`${data}`} variant="outlined" />
+                  <Chip
+                    label={`${data.name}`}
+                    variant="outlined"
+                    onClick={() => router.push(`/category/${data.id}`)}
+                  />
                 ))}
               </Stack>
               <Divider sx={{ my: 3 }} />

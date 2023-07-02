@@ -1,6 +1,4 @@
-import Image from "next/image";
-import styles from "@/app/page.module.css";
-import { Grid, Box, Typography, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 import Jumbotron from "@/components/home/Jumbotron";
 import RecentPosts from "@/components/home/RecentPosts";

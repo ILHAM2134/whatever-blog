@@ -47,10 +47,10 @@ export default function Navbar(props: Props) {
   React.useEffect(() => {
     const getData = async () => {
       const authors = await Client.fetch(
-        `*[_type == "author"]{name, "img": image.asset->url }`
+        `*[_type == "author"]{name, "id": _id }`
       );
       const categories = await Client.fetch(
-        `*[_type == "category"]{'name': title}`
+        `*[_type == "category"]{'name': title, "id": _id}`
       );
 
       console.log(authors);
@@ -126,18 +126,23 @@ export default function Navbar(props: Props) {
               display: { xs: "none", sm: "flex" },
             }}
           >
-            <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>
+            <Button
+              sx={{ fontSize: "1rem", ml: { md: 3 } }}
+              onClick={() => router.push("/")}
+            >
               Recent Posts
             </Button>
             <Dropdown
               label="Categories"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
               data={state.categories}
+              type="category"
             />
             <Dropdown
               label="Writers"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
               data={state.authors}
+              type="author"
             />
             <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>Login</Button>
           </Box>

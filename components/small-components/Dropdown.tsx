@@ -2,8 +2,8 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { Button, Divider, Menu, MenuItem } from "@mui/material";
 import { MenuProps } from "@mui/material/Menu";
-import EditIcon from "@mui/icons-material/Edit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useRouter } from "next/router";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -52,16 +52,21 @@ type DropdownProps = {
   label: string;
   sx: any;
   data: any[];
+  type: string
 };
 
-export default function Dropdown({ label, sx, data }: DropdownProps) {
+export default function Dropdown({ label, sx, data, type }: DropdownProps) {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  
+  const pushingTo = (id: string | number) => {
     setAnchorEl(null);
+    router.push(`/${type}/${id}`)
   };
 
   return (
@@ -76,12 +81,12 @@ export default function Dropdown({ label, sx, data }: DropdownProps) {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
       >
         {data.length != 0 &&
           data.map((item) => (
             <>
-              <MenuItem onClick={handleClose} disableRipple>
+              <MenuItem onClick={() => pushingTo(item.id)} disableRipple>
                 {item.name}
               </MenuItem>
               <Divider sx={{ my: 0 }} />
