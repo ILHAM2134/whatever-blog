@@ -78,7 +78,7 @@ const Category = ({
                   mt: 5,
                 }}
               >
-                Topik ini belum memiliki artikel
+                Author ini belum memiliki artikel
               </Typography>
             )}
           </Grid>
