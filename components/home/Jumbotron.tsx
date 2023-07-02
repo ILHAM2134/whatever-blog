@@ -17,7 +17,7 @@ const Jumbotron = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
+        height: "80vh",
         position: "absolute",
         top: 0,
         left: 0,
@@ -34,29 +34,28 @@ const Jumbotron = () => {
         sx={{
           color: "white",
           width: "100%",
-          height: "100vh",
+          height: "80vh",
           position: "absolute",
           top: 0,
           left: 0,
           backgroundColor: context.darkMode
-            ? "rgba(0, 0, 0, 0.7)"
-            : "rgba(175, 175, 175, 0.5)",
+            ? "rgba(0, 0, 0, 0.8)"
+            : "rgba(175, 175, 175, 0.7)",
           zIndex: 200,
         }}
       >
         <Box
           sx={{
-            position: "relative",
-            top: {
-              xs: "40vh",
-              sm: '55vh'
-            },
             maxWidth: 1100,
             width: "100%",
             mx: "auto",
             px: {
               xs: 1,
               sm: 2,
+              md: 3,
+            },
+            mt: {
+              xs: "25vh",
             },
           }}
         >
@@ -107,6 +106,29 @@ const Jumbotron = () => {
               this blog contains whatever random various topics that fulfill
               your daily dose of randomness
             </Typography>
+          </motion.div>
+          <motion.div
+            whileHover={{ opacity: 0.9 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: [0, 1], scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                mt: 3,
+                px: 2,
+                display: "block",
+                width: "120px",
+                py: 1,
+                mx: { xs: "auto", lg: 0 },
+              }}
+              href="#post"
+            >
+              Start Reading
+            </Button>
           </motion.div>
         </Box>
       </Box>
