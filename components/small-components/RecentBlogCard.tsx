@@ -43,7 +43,7 @@ const RecentBlogCard = ({ post }: { post: any }) => {
             {post?.body?.length > 0 && (
               post?.body
               .map((text) => {
-                const bodyChild = text.children?
+                const bodyChild = text.children
                   .map((child) => {
                     return child.text;
                   })
