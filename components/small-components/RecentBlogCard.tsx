@@ -41,7 +41,7 @@ const RecentBlogCard = ({ post }: { post: any }) => {
             sx={{ fontWeight: 600, mt: 1, opacity: 0.8 }}
           >
             {post?.body?.length > 0 && (
-              post?.body?
+              post?.body
               .map((text) => {
                 const bodyChild = text.children?
                   .map((child) => {
