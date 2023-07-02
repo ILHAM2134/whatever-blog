@@ -36,14 +36,30 @@ const RecentPosts = () => {
   }, []);
 
   return (
-    <Box sx={{ width: "100%", mt: "100vh" }}>
-      <Grid container spacing={2} justifyContent="space-between">
-        <Grid item xs={12} sm>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: "1100px",
+        mx: "auto",
+        px: 2,
+        marginTop: "120vh",
+        minHeight: "100vh",
+      }}
+    >
+      <Grid container spacing={2} justifyContent="center">
+        <Grid
+          item
+          xs={12}
+          sm={2}
+          sx={{ position: "stick", border: "1px solid white", px: 0 }}
+        >
           <Box>
-            <Typography variant="h3">Recent Posts</Typography>
+            <Typography variant="h5" sx={{ fontWeight: 900 }}>
+              Recent Posts
+            </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm>
+        <Grid item xs={12} sm={8} sx={{ border: "1px solid white" }}>
           {post.length > 0 &&
             post.map((data) => <RecentBlogCard post={data} />)}
         </Grid>
