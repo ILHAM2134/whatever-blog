@@ -11,7 +11,7 @@ import {
 import Navbar from "@/components/Navbar";
 import { AppWrapper } from "@/state/RootContext";
 import "@/styles/globals.css";
-
+import { NextPageContext } from 'next'
 import Client from '@/sanity-config'
 
 import App from 'next/app'
@@ -78,7 +78,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   );
 };
 
-MyApp.getInitialProps = async (context) => {
+MyApp.getInitialProps = async (context: NextPageContext) => {
   const authors = await Client.fetch(`*[_type == "author"]{name, "id": _id }`);
   const categories = await Client.fetch(
     `*[_type == "category"]{'name': title, "id": _id}`
