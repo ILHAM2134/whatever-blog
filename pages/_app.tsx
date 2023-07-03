@@ -79,7 +79,7 @@ const MyApp = (props: MyAppProps) => {
   );
 };
 
-MyApp.getInitialProps = async (context: NextPageContext) => {
+MyApp.getInitialProps = async (context: any) => {
   const authors = await Client.fetch(`*[_type == "author"]{name, "id": _id }`);
   const categories = await Client.fetch(
     `*[_type == "category"]{'name': title, "id": _id}`
