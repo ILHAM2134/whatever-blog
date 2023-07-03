@@ -30,13 +30,15 @@ interface Props {
    */
   window?: () => Window;
   authors: any,
-  categories: any
+  categories: any,
+  isDarkMode: boolean,
+  setIsDarkMode: any
 }
 
 export default function Navbar(props: Props) {
   const router = useRouter();
   const [context, setContext] = useAppContext();
-  const { window,categories, authors } = props;
+  const { window,categories, authors, isDarkMode, setIsDarkMode } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   // const [state, setState] = React.useState({
@@ -161,6 +163,7 @@ export default function Navbar(props: Props) {
               sx={{ ml: { md: 5 } }}
               style={{ color: context.darkMode ? "white" : "black" }}
               onClick={() => {
+              setIsDarkMode(!isDarkMode)
                 setContext((prev: { darkMode: boolean }) => ({
                   ...prev,
                   darkMode: !prev.darkMode,
@@ -219,6 +222,7 @@ export default function Navbar(props: Props) {
               <ListItem
                 disablePadding
                 onClick={() => {
+                setIsDarkMode(!darkMode
                   setContext((prev: { darkMode: boolean }) => ({
                     ...prev,
                     darkMode: !prev.darkMode,

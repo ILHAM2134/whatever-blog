@@ -60,7 +60,7 @@ const MyApp = (props: MyAppProps) => {
         <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
           <CssBaseline />
           <AppWrapper>
-            <Navbar authors={authors} categories={categories} />
+            <Navbar authors={authors} categories={categories} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
             <Box
               sx={{
                 mt: 10,
