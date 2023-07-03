@@ -221,7 +221,7 @@ export default function Navbar(props: Props) {
               <ListItem
                 disablePadding
                 onClick={() => {
-                setIsDarkMode(!darkMode
+                setIsDarkMode(!darkMode)
                   setContext((prev: { darkMode: boolean }) => ({
                     ...prev,
                     darkMode: !prev.darkMode,
