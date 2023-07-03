@@ -13,7 +13,3 @@ html {
 .child-snap {
   scroll-snap-align: start;
 }
-
-.test-asal {
-  color: inherit;
-}

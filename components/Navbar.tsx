@@ -207,7 +207,7 @@ export default function Navbar(props: Props) {
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="h6" sx={{ my: 2 }}>
               <ShuffleIcon />
-              MyPersonalWeb
+              Whatever Blog
             </Typography>
             <Divider />
             <List>
