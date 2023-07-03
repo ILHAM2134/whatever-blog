@@ -59,7 +59,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
         <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
           <CssBaseline />
           <AppWrapper>
-            <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} authors={authors} categories={categories} />
+            <Navbar authors={authors} categories={categories} />
             <Box
               sx={{
                 mt: 10,
