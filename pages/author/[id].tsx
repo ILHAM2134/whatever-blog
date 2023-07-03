@@ -31,13 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Category = ({
-  pageData,
-  authors,
-}: {
-  pageData: any;
-  authors: any[];
-}) => {
+const Category = ({ pageData, authors }: { pageData: any; authors: any[] }) => {
   console.log(pageData);
   const router = useRouter();
   const classes = useStyles();
@@ -63,7 +57,8 @@ const Category = ({
                   textAlign: "center",
                 }}
               >
-                Author: {!pageData?.title ? 'Author tidak ditemukan' : pageData?.title}
+                Author:{" "}
+                {!pageData?.title ? "Author tidak ditemukan" : pageData?.title}
               </Typography>
             </Box>
             {pageData?.posts?.length > 0 ? (

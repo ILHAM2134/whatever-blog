@@ -12,9 +12,15 @@ import Navbar from "@/components/Navbar";
 import { AppWrapper } from "@/state/RootContext";
 import "@/styles/globals.css";
 
+import Client from '@/sanity-config'
+
+import App from 'next/app'
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
   title?: String;
+  authors: any;
+  categories: any
 }
 
 const clientSideEmotionCache = createEmotionCache();
@@ -28,7 +34,13 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
     emotionCache = clientSideEmotionCache,
     pageProps,
     title = "Whatever Blog",
+    authors,
+    categories
   } = props;
+
+  console.log('_app.tsx rendered')
+  console.log(authors );
+  console.log(categories );
 
   const [isDarkMode, setIsDarkMode] = React.useState(true);
 
@@ -47,7 +59,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
         <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
           <CssBaseline />
           <AppWrapper>
-            <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} authors={authors} categories={categories} />
             <Box
               sx={{
                 mt: 10,
@@ -66,6 +78,19 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   );
 };
 
-export const getServerSideProps = () => {};
+MyApp.getInitialProps = async (context) => {
+  const authors = await Client.fetch(`*[_type == "author"]{name, "id": _id }`);
+  const categories = await Client.fetch(
+    `*[_type == "category"]{'name': title, "id": _id}`
+  );
+
+  const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
+  
+  return {
+      ...pageProps,
+      authors,
+      categories
+  };
+};
 
 export default MyApp;

@@ -5,7 +5,6 @@ import Jumbotron from "@/components/home/Jumbotron";
 import RecentPosts from "@/components/home/RecentPosts";
 
 export default function Home({ post, categories }: { post: any, categories: any }) {
-  console.log(post)
   return (
     <Box sx={{ maxWidth: 1100, width: "100%" }}>
       <Jumbotron />
@@ -38,7 +37,6 @@ export const getServerSideProps = async () => {
     *[_type == 'category']{'name': title, "id": _id}
   `);
 
-  console.log(categories)
 
   return {
     props: {

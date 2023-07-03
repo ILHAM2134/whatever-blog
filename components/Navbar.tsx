@@ -29,41 +29,39 @@ interface Props {
    * You won't need it on your project.
    */
   window?: () => Window;
-  isDarkMode: boolean;
-  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  authors: any,
+  categories: any
 }
 
 export default function Navbar(props: Props) {
   const router = useRouter();
   const [context, setContext] = useAppContext();
-  const { window, isDarkMode, setIsDarkMode } = props;
+  const { window,categories, authors } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const [state, setState] = React.useState({
-    categories: [],
-    authors: [],
-  });
+  // const [state, setState] = React.useState({
+  //   categories: [],
+  //   authors: [],
+  // });
 
-  React.useEffect(() => {
-    const getData = async () => {
-      const authors = await Client.fetch(
-        `*[_type == "author"]{name, "id": _id }`
-      );
-      const categories = await Client.fetch(
-        `*[_type == "category"]{'name': title, "id": _id}`
-      );
+  // React.useEffect(() => {
+  //   const getData = async () => {
+  //     const authors = await Client.fetch(
+  //       `*[_type == "author"]{name, "id": _id }`
+  //     );
+  //     const categories = await Client.fetch(
+  //       `*[_type == "category"]{'name': title, "id": _id}`
+  //     );
 
-      console.log(authors);
+  //     setState((prev) => ({
+  //       ...prev,
+  //       authors,
+  //       categories,
+  //     }));
+  //   };
 
-      setState((prev) => ({
-        ...prev,
-        authors,
-        categories,
-      }));
-    };
-
-    getData();
-  }, []);
+  //   getData();
+  // }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -115,7 +113,7 @@ export default function Navbar(props: Props) {
               },
               fontWeight: 700,
             }}
-            style={{ color: isDarkMode ? "white" : "black" }}
+            style={{ color: context.darkMode ? "white" : "black" }}
           >
             <ShuffleIcon />
             Whatever Blog
@@ -135,13 +133,13 @@ export default function Navbar(props: Props) {
             <Dropdown
               label="Categories"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
-              data={state.categories}
+              data={categories}
               type="category"
             />
             <Dropdown
               label="Writers"
               sx={{ fontSize: "1rem", ml: { md: 3 } }}
-              data={state.authors}
+              data={authors}
               type="author"
             />
             <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>Login</Button>
@@ -152,7 +150,7 @@ export default function Navbar(props: Props) {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: { xs: 1, sm: 0 }, display: { sm: "none" } }}
-            style={{ color: isDarkMode ? "white" : "black" }}
+            style={{ color: context.darkMode ? "white" : "black" }}
           >
             <MenuIcon />
           </IconButton>
@@ -161,16 +159,15 @@ export default function Navbar(props: Props) {
           >
             <IconButton
               sx={{ ml: { md: 5 } }}
-              style={{ color: isDarkMode ? "white" : "black" }}
+              style={{ color: context.darkMode ? "white" : "black" }}
               onClick={() => {
-                setIsDarkMode(!isDarkMode);
                 setContext((prev: { darkMode: boolean }) => ({
                   ...prev,
                   darkMode: !prev.darkMode,
                 }));
               }}
             >
-              {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+              {context.darkMode ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
           </Box>
         </Toolbar>
@@ -222,7 +219,6 @@ export default function Navbar(props: Props) {
               <ListItem
                 disablePadding
                 onClick={() => {
-                  setIsDarkMode(!isDarkMode);
                   setContext((prev: { darkMode: boolean }) => ({
                     ...prev,
                     darkMode: !prev.darkMode,
@@ -235,9 +231,9 @@ export default function Navbar(props: Props) {
                 >
                   <IconButton
                     sx={{ ml: { md: 5 } }}
-                    style={{ color: isDarkMode ? "white" : "black" }}
+                    style={{ color: context.darkMode ? "white" : "black" }}
                   >
-                    {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                    {context.darkMode ? <LightModeIcon /> : <DarkModeIcon />}
                   </IconButton>
                 </ListItemButton>
               </ListItem>
