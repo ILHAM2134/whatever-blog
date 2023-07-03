@@ -29,7 +29,22 @@ const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);
 const darkTheme = createTheme(darkThemeOptions);
 
-const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
+MyApp.getInitialProps = async (context: NextPageContext) => {
+  const authors = await Client.fetch(`*[_type == "author"]{name, "id": _id }`);
+  const categories = await Client.fetch(
+    `*[_type == "category"]{'name': title, "id": _id}`
+  );
+
+  const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
+  
+  return {
+      ...pageProps,
+      authors,
+      categories
+  };
+};
+
+const MyApp = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
@@ -77,21 +92,6 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
       </CacheProvider>
     </>
   );
-};
-
-MyApp.getInitialProps = async (context: NextPageContext) => {
-  const authors = await Client.fetch(`*[_type == "author"]{name, "id": _id }`);
-  const categories = await Client.fetch(
-    `*[_type == "category"]{'name': title, "id": _id}`
-  );
-
-  const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
-  
-  return {
-      ...pageProps,
-      authors,
-      categories
-  };
 };
 
 export default MyApp;
