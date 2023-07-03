@@ -1,10 +1,16 @@
 import { Box } from "@mui/material";
 
-import Client from '@/sanity-config'
+import Client from "@/sanity-config";
 import Jumbotron from "@/components/home/Jumbotron";
 import RecentPosts from "@/components/home/RecentPosts";
 
-export default function Home({ post, categories }: { post: any, categories: any }) {
+export default function Home({
+  post,
+  categories,
+}: {
+  post: any;
+  categories: any;
+}) {
   return (
     <Box sx={{ maxWidth: 1100, width: "100%" }}>
       <Jumbotron />
@@ -36,7 +42,6 @@ export const getServerSideProps = async () => {
   const categories = await Client.fetch(`
     *[_type == 'category']{'name': title, "id": _id}
   `);
-
 
   return {
     props: {

@@ -52,10 +52,11 @@ type DropdownProps = {
   label: string;
   sx: any;
   data: any[];
-  type: string
+  type: string,
+  callback?: any
 };
 
-export default function Dropdown({ label, sx, data, type }: DropdownProps) {
+export default function Dropdown({ label, sx, data, type, callback = console.log }: DropdownProps) {
   const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -65,6 +66,7 @@ export default function Dropdown({ label, sx, data, type }: DropdownProps) {
   };
   
   const pushingTo = (id: string | number) => {
+    callback()
     setAnchorEl(null);
     router.push(`/${type}/${id}`)
   };

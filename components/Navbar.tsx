@@ -21,7 +21,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { useAppContext } from "@/state/RootContext";
 import { useRouter } from "next/router";
 import Dropdown from "./small-components/Dropdown";
-import Client from "@/sanity-config";
+import Swal from "sweetalert2";
 
 interface Props {
   /**
@@ -29,16 +29,16 @@ interface Props {
    * You won't need it on your project.
    */
   window?: () => Window;
-  authors: any,
-  categories: any,
-  isDarkMode: boolean,
-  setIsDarkMode: any
+  authors: any;
+  categories: any;
+  isDarkMode: boolean;
+  setIsDarkMode: any;
 }
 
 export default function Navbar(props: Props) {
   const router = useRouter();
   const [context, setContext] = useAppContext();
-  const { window,categories, authors, isDarkMode, setIsDarkMode } = props;
+  const { window, categories, authors, isDarkMode, setIsDarkMode } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   // const [state, setState] = React.useState({
@@ -48,10 +48,8 @@ export default function Navbar(props: Props) {
 
   // React.useEffect(() => {
   //   const getData = async () => {
-  //     const authors = await Client.fetch(
   //       `*[_type == "author"]{name, "id": _id }`
   //     );
-  //     const categories = await Client.fetch(
   //       `*[_type == "category"]{'name': title, "id": _id}`
   //     );
 
@@ -65,11 +63,21 @@ export default function Navbar(props: Props) {
   //   getData();
   // }, []);
 
+  const handleFeatureNotFound = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "This feature under maintenance!",
+      footer: '<a href="">Why do I have this issue?</a>',
+    });
+  };
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box>
@@ -143,7 +151,12 @@ export default function Navbar(props: Props) {
               data={authors}
               type="author"
             />
-            <Button sx={{ fontSize: "1rem", ml: { md: 3 } }}>Login</Button>
+            <Button
+              sx={{ fontSize: "1rem", ml: { md: 3 } }}
+              onClick={handleFeatureNotFound}
+            >
+              Login
+            </Button>
           </Box>
           <IconButton
             color="inherit"
@@ -162,7 +175,7 @@ export default function Navbar(props: Props) {
               sx={{ ml: { md: 5 } }}
               style={{ color: context.darkMode ? "white" : "black" }}
               onClick={() => {
-              setIsDarkMode(!isDarkMode)
+                setIsDarkMode(!isDarkMode);
                 setContext((prev: { darkMode: boolean }) => ({
                   ...prev,
                   darkMode: !prev.darkMode,
@@ -191,7 +204,7 @@ export default function Navbar(props: Props) {
             },
           }}
         >
-          <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center" }}>
             <Typography variant="h6" sx={{ my: 2 }}>
               <ShuffleIcon />
               MyPersonalWeb
@@ -199,29 +212,54 @@ export default function Navbar(props: Props) {
             <Divider />
             <List>
               <ListItem disablePadding>
-                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                <ListItemButton
+                  sx={{ textAlign: "left", ml: 2 }}
+                  onClick={() => {
+                    handleDrawerToggle()
+                    router.push("/")
+                  }}
+                >
                   <ListItemText primary="Recent Posts" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
-                  <ListItemText primary="Categories" />
+                <ListItemButton sx={{ textAlign: "left", ml: '6px' }}>
+                  <Dropdown
+                    label="Categories"
+                    sx={{ fontSize: "1rem" }}
+                    data={categories}
+                    type="category"
+                    callback={handleDrawerToggle}
+                  />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
-                  <ListItemText primary="Writers" />
+                <ListItemButton sx={{ textAlign: "left", ml: '6px' }}>
+                  <Dropdown
+                    label="Writers"
+                    sx={{ fontSize: "1rem" }}
+                    data={authors}
+                    type="author"
+                    callback={handleDrawerToggle}
+                  />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton sx={{ textAlign: "left", ml: 1 }} href="">
+                <ListItemButton
+                  sx={{ textAlign: "left", ml: 2 }}
+                  onClick={() => {
+                    handleDrawerToggle()
+                    handleFeatureNotFound()
+                  }}
+                >
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
               <ListItem
                 disablePadding
                 onClick={() => {
-                setIsDarkMode(!isDarkMode)
+                  handleDrawerToggle()
+                  setIsDarkMode(!isDarkMode);
                   setContext((prev: { darkMode: boolean }) => ({
                     ...prev,
                     darkMode: !prev.darkMode,

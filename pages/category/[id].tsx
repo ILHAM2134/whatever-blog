@@ -15,6 +15,7 @@ import {
 import RecentBlogCard from "@/components/small-components/RecentBlogCard";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles({
   root: {
@@ -41,6 +42,37 @@ const Category = ({
   console.log(pageData);
   const router = useRouter();
   const classes = useStyles();
+  const handleNotFound = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "This feature under maintenance!",
+      footer: '<a href="">Why do I have this issue?</a>',
+    });
+  };
+
+  const handleThanks = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Thanks to..",
+      html:
+        "<p><a target='_blank' href='https://www.pexels.com/'><b>Pexels</b></a>, that provide many good img for assets.</p>" +
+        "<br/>" +
+        "<p><a target='_blank' href='https://medium.com/'><b>Medium</b></a>, i made web layout similar to this layout design.</p>" +
+        "<br/>" +
+        "<p>and such those great technology i used to made this website :</p>" +
+        "<br/>" +
+        "<p><a target='_blank' href='https://nextjs.org/'>Next.js</a></p>" +
+        "<p><a target='_blank' href='https://mui.com/'>Material UI</a></p>" +
+        "<p><a target='_blank' href='https://www.framer.com/motion/'>Framer Motion</a></p>" +
+        "<p><a target='_blank' href='https://www.sanity.io/'>Sanity CMS</a></p>" +
+        "<p><a target='_blank' href='https://vercel.com/dashboard'>Vercel</a></p>" +
+        "<p><a target='_blank' href='https://sweetalert2.github.io/#download'>Sweetalert2</a></p>" +
+        "<p><a target='_blank' href='https://www.typescriptlang.org/'>Typescript</a></p>",
+      footer: "<p><b>Thank you!</b></p>",
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -63,7 +95,10 @@ const Category = ({
                   textAlign: "center",
                 }}
               >
-                Category: {!pageData?.title ? ('Kategori tidak ditemukan') : (pageData?.title)}
+                Category:{" "}
+                {!pageData?.title
+                  ? "Kategori tidak ditemukan"
+                  : pageData?.title}
               </Typography>
             </Box>
             {pageData?.posts?.length > 0 ? (
@@ -106,11 +141,25 @@ const Category = ({
                 spacing={1}
                 sx={{ mt: 1, flexWrap: "wrap", gap: 1 }}
               >
-                <Button variant="text">Help</Button>
-                <Button variant="text">Status</Button>
-                <Button variant="text">Terms & Conditions</Button>
-                <Button variant="text">Start Writing</Button>
-                <Button variant="text">Privacy Policy</Button>
+                <Button variant="text" onClick={handleThanks}>
+                  Thanks to
+                </Button>
+                <Button
+                  variant="text"
+                  href="https://github.com/ILHAM2134/whatever-blog"
+                  target="_blank"
+                >
+                  Source code
+                </Button>
+                <Button variant="text" onClick={handleNotFound}>
+                  Terms & Conditions
+                </Button>
+                <Button variant="text" onClick={handleNotFound}>
+                  Start Writing
+                </Button>
+                <Button variant="text" onClick={handleNotFound}>
+                  Privacy Policy
+                </Button>
               </Stack>
             </Box>
           </Grid>
@@ -150,7 +199,7 @@ export const getServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      pageData: pageData.length > 0 ? pageData[0] : [] ,
+      pageData: pageData.length > 0 ? pageData[0] : [],
       categories,
     },
   };
