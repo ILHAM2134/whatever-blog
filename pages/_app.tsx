@@ -20,7 +20,8 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
   title?: String;
   authors: any;
-  categories: any
+  categories: any,
+  getInitialProps: any
 }
 
 const clientSideEmotionCache = createEmotionCache();
